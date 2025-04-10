@@ -20,11 +20,32 @@ if (!isset($_SESSION['user_id'])) {
 <div class="container mt-5">
     <h1 class="mb-4">Bienvenido, <?php echo htmlspecialchars($_SESSION['nombre']); ?>!</h1>
 
-    <div class="d-grid gap-3 col-6 mx-auto">
-        <a href="formulario_asociado.php" class="btn btn-primary btn-lg">Formulario de Información del Asociado</a>
-        <a href="ver_documentos.php" class="btn btn-secondary btn-lg">Ver Documentos Subidos</a>
-        <a href="index.html" class="btn btn-danger btn-lg">Volver al Inicio</a>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <a href="formulario_asociado.php" class="btn btn-primary btn-lg w-100">Formulario de Información del Asociado</a>
+        </div>
+        <div class="col-md-6">
+            <a href="ver_documentos.php" class="btn btn-secondary btn-lg w-100">Ver Documentos Subidos</a>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <a href="formulario_cuentacobro.php" class="btn btn-primary btn-lg w-100">Subir Cuenta de Cobro</a>
+        </div>
+        <div class="col-md-6">
+            <a href="ver_cuentas_cobro.php" class="btn btn-secondary btn-lg w-100">Ver Cuentas de Cobro</a>
+        </div>
+    </div>
+    <div class="col-md-6">
+            <a href="estadisticas.php" class="btn btn-secondary btn-lg w-100">estadisticas</a>
+        </div>
+    <div class="row">
+        <div class="col-12">
+            <a href="index.html" class="btn btn-danger btn-lg w-100">Volver al Inicio</a>
+        </div>
     </div>
 </div>
 </body>
 </html>
+

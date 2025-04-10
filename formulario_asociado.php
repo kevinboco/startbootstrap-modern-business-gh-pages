@@ -34,6 +34,7 @@ if (!isset($_SESSION['user_id'])) {
         </div>
         <button type="submit" class="btn btn-primary">Enviar Información</button>
     </form>
+    <a href="bienvenida.php" class="btn btn-secondary mt-3">Volver</a>
 </div>
 </body>
 </html>
