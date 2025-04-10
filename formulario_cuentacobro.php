@@ -28,6 +28,11 @@ if (!isset($_SESSION['user_id'])) {
             <label for="cuenta_cobro" class="form-label">Cuenta de Cobro (.xlsx,.xls)</label>
             <input type="file" class="form-control" id="cuenta_cobro" name="cuenta_cobro" accept=".xlsx,.xls" required>
         </div>
+        <div class="mb-3">
+          <label class="form-label">Captura de Pago Realizado</label>
+          <input type="file" class="form-control" name="captura_pago_realizado" accept=".pdf,.jpg,.jpeg,.png" required>
+        </div>
+
         <button type="submit" class="btn btn-success">Subir</button>
         <a href="bienvenida.php" class="btn btn-secondary ms-2">Volver</a>
     </form>

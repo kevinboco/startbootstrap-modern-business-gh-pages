@@ -33,7 +33,8 @@ require_once 'db.php'; // Conexión a la base de datos
             <tr>
                 <th>Nombre del viaje</th>
                 <th>Fecha</th>
-                <th>Archivo</th>
+                <th>Cuenta de Cobro</th>
+                <th>Captura de Pago</th>
             </tr>
         </thead>
         <tbody>
@@ -44,6 +45,11 @@ require_once 'db.php'; // Conexión a la base de datos
             echo "<td>" . htmlspecialchars($row['nombre_viaje']) . "</td>";
             echo "<td>" . htmlspecialchars($row['fecha']) . "</td>";
             echo "<td><a href='" . htmlspecialchars($row['archivo_path']) . "' target='_blank'>Ver archivo</a></td>";
+            if (!empty($row['captura_pago_realizado'])) {
+                echo "<td><a href='" . htmlspecialchars($row['captura_pago_realizado']) . "' target='_blank'>Ver captura</a></td>";
+            } else {
+                echo "<td>No disponible</td>";
+            }
             echo "</tr>";
         }
         $conn->close();
