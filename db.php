@@ -1,8 +1,8 @@
 <?php
-$host = "localhost";
-$dbname = "asociacion";
-$user = "root";
-$pass = "";
+$host = "mysql.hostinger.com";
+$dbname = "zonanorte";
+$user = "keboco1";
+$pass = "Bucaramanga3011";
 
 // Conexión a la base de datos
 $conn = new mysqli($host, $user, $pass, $dbname);
