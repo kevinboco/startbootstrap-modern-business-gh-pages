@@ -30,7 +30,8 @@ if (!isset($_SESSION['user_id'])) {
         </div>
         <div class="mb-3">
           <label class="form-label">Captura de Pago Realizado</label>
-          <input type="file" class="form-control" name="captura_pago_realizado" accept=".pdf,.jpg,.jpeg,.png" required>
+          <input type="file" class="form-control" name="captura_pago_realizado" accept=".pdf,.jpg,.jpeg,.png">
+
         </div>
 
         <button type="submit" class="btn btn-success">Subir</button>
