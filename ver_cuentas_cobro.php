@@ -35,6 +35,7 @@ require_once 'db.php'; // Conexión a la base de datos
                 <th>Fecha</th>
                 <th>Cuenta de Cobro</th>
                 <th>Captura de Pago</th>
+                <th>Modificar</th>
             </tr>
         </thead>
         <tbody>
@@ -46,10 +47,13 @@ require_once 'db.php'; // Conexión a la base de datos
             echo "<td>" . htmlspecialchars($row['fecha']) . "</td>";
             echo "<td><a href='" . htmlspecialchars($row['archivo_path']) . "' target='_blank'>Ver archivo</a></td>";
             if (!empty($row['captura_pago_realizado'])) {
-                echo "<td><a href='" . htmlspecialchars($row['captura_pago_realizado']) . "' target='_blank'>Ver captura</a></td>";
+                // Aquí concatenamos la ruta correcta a la carpeta "informacion"
+                $rutaCaptura = 'informacion/' . htmlspecialchars($row['captura_pago_realizado']);
+                echo "<td><a href='" . $rutaCaptura . "' target='_blank'>Ver captura</a></td>";
             } else {
                 echo "<td>No disponible</td>";
             }
+            echo "<td><a href='editar_cuenta.php?id=" . urlencode($row['id']) . "' class='btn btn-sm btn-primary'>Modificar</a></td>";
             echo "</tr>";
         }
         $conn->close();
