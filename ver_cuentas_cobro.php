@@ -47,7 +47,7 @@ require_once 'db.php'; // Conexión a la base de datos
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['nombre_viaje']) . "</td>";
             if (!empty($row['cuenta_empresa'])) {
-                $rutaCaptura = '/asociacion/' . htmlspecialchars($row['cuenta_empresa']);
+                $rutaCaptura = '/proyecto/' . htmlspecialchars($row['cuenta_empresa']);
                 echo "<td><a href='" . $rutaCaptura . "' target='_blank'>" . basename($rutaCaptura) . "</a></td>";
             } else {
                 echo "<td>No disponible</td>";
@@ -56,7 +56,7 @@ require_once 'db.php'; // Conexión a la base de datos
 
             // Ruta al archivo de cuenta de cobro
             if (!empty($row['cuenta_cobro'])) {
-                $rutaCuenta = '/asociacion/' . htmlspecialchars($row['cuenta_cobro']);
+                $rutaCuenta = '/proyecto/' . htmlspecialchars($row['cuenta_cobro']);
                 echo "<td><a href='" . $rutaCuenta . "' target='_blank'>" . basename($rutaCuenta) . "</a></td>";
             } else {
                 echo "<td>No disponible</td>";
@@ -64,7 +64,7 @@ require_once 'db.php'; // Conexión a la base de datos
 
             // Ruta a la captura de pago
             if (!empty($row['captura_pago_realizado'])) {
-                $rutaCaptura = '/asociacion/informacion/' . htmlspecialchars($row['captura_pago_realizado']);
+                $rutaCaptura = '/proyecto/informacion/' . htmlspecialchars($row['captura_pago_realizado']);
                 echo "<td><a href='" . $rutaCaptura . "' target='_blank'>" . basename($rutaCaptura) . "</a></td>";
             } else {
                 echo "<td>No disponible</td>";
@@ -83,7 +83,7 @@ require_once 'db.php'; // Conexión a la base de datos
             echo "<td>";
             if ($resultTrabajadores->num_rows > 0) {
                 while ($trabajador = $resultTrabajadores->fetch_assoc()) {
-                    $rutaArchivoTrabajador = '/asociacion/' . htmlspecialchars($trabajador['archivo']);
+                    $rutaArchivoTrabajador = '/proyecto/' . htmlspecialchars($trabajador['archivo']);
                     echo "<a href='" . $rutaArchivoTrabajador . "' target='_blank'>" . basename($rutaArchivoTrabajador) . "</a><br>";
                 }
             } else {
