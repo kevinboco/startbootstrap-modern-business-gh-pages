@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.html");
@@ -32,10 +32,12 @@ require_once 'db.php'; // Conexión a la base de datos
         <thead class="table-dark">
             <tr>
                 <th>Nombre del viaje</th>
+                <th>cuenta de cobro enviada a la empresa</th>
                 <th>Fecha</th>
                 <th>Cuenta de Cobro</th>
                 <th>Captura de Pago</th>
                 <th>Modificar</th>
+                <th>Archivos de Trabajadores</th>
             </tr>
         </thead>
         <tbody>
@@ -44,16 +46,51 @@ require_once 'db.php'; // Conexión a la base de datos
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['nombre_viaje']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['fecha']) . "</td>";
-            echo "<td><a href='" . htmlspecialchars($row['archivo_path']) . "' target='_blank'>Ver archivo</a></td>";
-            if (!empty($row['captura_pago_realizado'])) {
-                // Aquí concatenamos la ruta correcta a la carpeta "informacion"
-                $rutaCaptura = 'informacion/' . htmlspecialchars($row['captura_pago_realizado']);
-                echo "<td><a href='" . $rutaCaptura . "' target='_blank'>Ver captura</a></td>";
+            if (!empty($row['cuenta_empresa'])) {
+                $rutaCaptura = '/asociacion/' . htmlspecialchars($row['cuenta_empresa']);
+                echo "<td><a href='" . $rutaCaptura . "' target='_blank'>" . basename($rutaCaptura) . "</a></td>";
             } else {
                 echo "<td>No disponible</td>";
             }
+            echo "<td>" . htmlspecialchars($row['fecha']) . "</td>";
+
+            // Ruta al archivo de cuenta de cobro
+            if (!empty($row['cuenta_cobro'])) {
+                $rutaCuenta = '/asociacion/' . htmlspecialchars($row['cuenta_cobro']);
+                echo "<td><a href='" . $rutaCuenta . "' target='_blank'>" . basename($rutaCuenta) . "</a></td>";
+            } else {
+                echo "<td>No disponible</td>";
+            }
+
+            // Ruta a la captura de pago
+            if (!empty($row['captura_pago_realizado'])) {
+                $rutaCaptura = '/asociacion/informacion/' . htmlspecialchars($row['captura_pago_realizado']);
+                echo "<td><a href='" . $rutaCaptura . "' target='_blank'>" . basename($rutaCaptura) . "</a></td>";
+            } else {
+                echo "<td>No disponible</td>";
+            }
+
+            // Botón para editar la cuenta de cobro
             echo "<td><a href='editar_cuenta.php?id=" . urlencode($row['id']) . "' class='btn btn-sm btn-primary'>Modificar</a></td>";
+
+            // Archivos de los trabajadores asociados a la cuenta de cobro
+            $idCuenta = $row['id'];
+            $subquery = $conn->prepare("SELECT archivo FROM cuentas_trabajadores WHERE cuenta_cobro_id = ?");
+            $subquery->bind_param("i", $idCuenta);
+            $subquery->execute();
+            $resultTrabajadores = $subquery->get_result();
+
+            echo "<td>";
+            if ($resultTrabajadores->num_rows > 0) {
+                while ($trabajador = $resultTrabajadores->fetch_assoc()) {
+                    $rutaArchivoTrabajador = '/asociacion/' . htmlspecialchars($trabajador['archivo']);
+                    echo "<a href='" . $rutaArchivoTrabajador . "' target='_blank'>" . basename($rutaArchivoTrabajador) . "</a><br>";
+                }
+            } else {
+                echo "No disponible";
+            }
+            echo "</td>";
+
             echo "</tr>";
         }
         $conn->close();
