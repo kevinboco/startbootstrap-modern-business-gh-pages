@@ -37,6 +37,7 @@ require_once 'db.php'; // Conexión a la base de datos
                 <th>Cuenta de Cobro</th>
                 <th>Captura de Pago</th>
                 <th>Modificar</th>
+                <th>eliminar registro</th>
                 <th>Archivos de Trabajadores</th>
             </tr>
         </thead>
@@ -72,7 +73,7 @@ require_once 'db.php'; // Conexión a la base de datos
 
             // Botón para editar la cuenta de cobro
             echo "<td><a href='editar_cuenta.php?id=" . urlencode($row['id']) . "' class='btn btn-sm btn-primary'>Modificar</a></td>";
-
+            echo "<td><a href='eliminar_cuenta.php?id=" . urlencode($row['id']) . "' class='btn btn-sm btn-danger'>eliminar</a></td>";
             // Archivos de los trabajadores asociados a la cuenta de cobro
             $idCuenta = $row['id'];
             $subquery = $conn->prepare("SELECT archivo FROM cuentas_trabajadores WHERE cuenta_cobro_id = ?");

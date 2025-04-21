@@ -38,7 +38,7 @@ if (!isset($_SESSION['user_id'])) {
 
                             <div class="mb-3">
                                 <label class="form-label">Cuentas de cobro de los afiliados</label>
-                                <input type="file" class="form-control" name="cuentas_trabajadores[]" multiple required>
+                                <input type="file" class="form-control" name="cuentas_trabajadores[]" multiple >
                             </div>
 
                             <div class="mb-3">
