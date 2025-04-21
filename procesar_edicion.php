@@ -11,33 +11,41 @@ $id = intval($_POST['id']);
 $nombre_viaje = trim($_POST['nombre_viaje']);
 $fecha = $_POST['fecha'];
 
-// Obtener los datos actuales para conservar archivos no reemplazados
+// Ruta física en el servidor
+define('CARPETA_FISICA', 'C:/xampp/htdocs/proyecto/informacion/');
+
+// Obtener datos actuales
 $actual = $conn->query("SELECT * FROM cuentas_cobro WHERE id = $id")->fetch_assoc();
 if (!$actual) {
     echo "Cuenta no encontrada.";
     exit;
 }
 
-// Función para guardar archivo y devolver nombre si se subió
-function guardarArchivo($inputName, $directorioDestino) {
+// Función para guardar archivo y eliminar el anterior si es necesario
+function guardarYReemplazar($inputName, $carpeta, $anterior, $prefijo) {
     if (isset($_FILES[$inputName]) && $_FILES[$inputName]['error'] === UPLOAD_ERR_OK) {
-        $nombreArchivo = basename($_FILES[$inputName]['name']);
-        $rutaDestino = $directorioDestino . $nombreArchivo;
-        move_uploaded_file($_FILES[$inputName]['tmp_name'], $rutaDestino);
-        return $nombreArchivo;
+        $nombreOriginal = basename($_FILES[$inputName]['name']);
+        $nombreUnico = $prefijo . uniqid() . '_' . $nombreOriginal;
+        $rutaDestino = $carpeta . $nombreUnico;
+
+        if (move_uploaded_file($_FILES[$inputName]['tmp_name'], $rutaDestino)) {
+            // Eliminar el archivo anterior si existe
+            if (!empty($anterior)) {
+                $rutaAnterior = $carpeta . basename($anterior);
+                if (file_exists($rutaAnterior)) {
+                    unlink($rutaAnterior);
+                }
+            }
+            return $nombreUnico;
+        }
     }
-    return null;
+    return $anterior;
 }
 
-// Guardar archivos si se subieron
-$nuevaCuentaEmpresa = guardarArchivo('cuenta_empresa', 'asociacion/');
-$nuevaCuentaCobro = guardarArchivo('cuenta_cobro', 'asociacion/');
-$nuevaCapturaPago = guardarArchivo('captura_pago_realizado', 'asociacion/informacion/');
-
-// Mantener los archivos anteriores si no se subió uno nuevo
-$cuenta_empresa = $nuevaCuentaEmpresa ?? $actual['cuenta_empresa'];
-$cuenta_cobro = $nuevaCuentaCobro ?? $actual['cuenta_cobro'];
-$captura_pago_realizado = $nuevaCapturaPago ?? $actual['captura_pago_realizado'];
+// Guardar nuevos archivos (y reemplazar si aplica)
+$cuenta_empresa = guardarYReemplazar('cuenta_empresa', CARPETA_FISICA, $actual['cuenta_empresa'], 'empresa_');
+$cuenta_cobro = guardarYReemplazar('cuenta_cobro', CARPETA_FISICA, $actual['cuenta_cobro'], 'cuenta_');
+$captura_pago_realizado = guardarYReemplazar('captura_pago_realizado', CARPETA_FISICA, $actual['captura_pago_realizado'], 'captura_');
 
 // Actualizar en la base de datos
 $stmt = $conn->prepare("UPDATE cuentas_cobro SET nombre_viaje=?, fecha=?, cuenta_empresa=?, cuenta_cobro=?, captura_pago_realizado=? WHERE id=?");
