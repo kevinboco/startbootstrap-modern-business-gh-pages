@@ -12,7 +12,8 @@ $nombre_viaje = trim($_POST['nombre_viaje']);
 $fecha = $_POST['fecha'];
 
 // Ruta física en el servidor
-define('CARPETA_FISICA', 'C:/xampp/htdocs/proyecto/informacion/');
+define('CARPETA_FISICA', __DIR__ . '/informacion/');
+
 
 // Obtener datos actuales
 $actual = $conn->query("SELECT * FROM cuentas_cobro WHERE id = $id")->fetch_assoc();
