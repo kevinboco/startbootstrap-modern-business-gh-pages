@@ -55,7 +55,7 @@ if ($stmt->execute()) {
     header("Location: ver_cuentas_cobro.php?msg=editado");
     exit;
 } else {
-    echo "Error al actualizar: " . $stmt->error;
+    echo "Error al actuali: " . $stmt->error;
 }
 
 $conn->close();
