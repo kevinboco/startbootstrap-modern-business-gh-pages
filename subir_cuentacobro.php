@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Cuenta de cobro subida exitosamente. <a href='bienvenida.php'>Volver</a>";
 
         // Notificación Telegram
-        $mensaje = "📄 Se ha subido una nueva cuenta de cobro:\n\n🗓 Fecha: $fecha\n✈️ Viaje: $nombre_viaje\n\nPor favor, revisa y procede con el pago.";
+        $mensaje = "📄 Se ha subido ;
         enviarNotificacionTelegram($mensaje);
     } else {
         echo "Error al guardar en la base de datos: " . $stmt->error;
