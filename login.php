@@ -30,7 +30,7 @@ if ($result->num_rows === 1) {
         $_SESSION['nombre'] = $user['nombre_completo'];
 
         // Redirigir a bienvenida
-        header("Location: bienvenida.php");
+        header("Location: /gestor/ver_tablas.php");
         exit;
     } else {
         echo "Contraseña incorrecta. <a href='login.html'>Volver</a>";
